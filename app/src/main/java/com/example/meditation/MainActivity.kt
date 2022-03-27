@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.meditation.main_window.MainWindowActivity
 
-private const val SPLASH_SCREEN_DELAY: Long = 2000
+private const val SPLASH_SCREEN_DELAY: Long = 1500
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
