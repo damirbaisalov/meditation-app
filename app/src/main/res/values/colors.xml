@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="first_app_color">#5e4fee</color>
+    <color name="second_app_color">#5e4fee</color>
+    <color name="third_app_color">#5e4fee</color>
+
+    <color name="bottom_nav_color">#006cd1</color>
+    <color name="bottom_nav_selected_icon">@color/white</color>
+    <color name="bottom_nav_unselected_icon">#9bd2f8</color>
+
+
+    <color name="start_gradient_color">#5e4fee</color>
+    <color name="center_gradient_color">#3c73f2</color>
+    <color name="end_gradient_color">#1494f1</color>
+
 </resources>

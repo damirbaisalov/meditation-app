@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Meditation">
-        <activity android:name=".MainActivity">
+        <activity android:name=".main_window.MainWindowActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/SplashScreenTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
