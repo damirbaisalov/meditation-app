@@ -1,11 +1,15 @@
 package com.example.meditation
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
+import com.example.meditation.dialog_fragments.DialogFragmentNameSurname
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,12 +21,30 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ThirdFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ThirdFragment : Fragment() {
+
+const val MY_APP_USER_ACTIVITY = "MY_APP_USER_ACTIVITY"
+const val USER_LANGUAGE = "USER_LANGUAGE"
+const val USER_NAME_SURNAME = "USER_NAME_SURNAME"
+const val USER_MEDITATION_NUM = "USER_MEDITATION_NUM"
+const val USER_MEDITATION_MINUTES = "USER_MEDITATION_MINUTES"
+const val USER_MEDITATION_DAYS = "USER_MEDITATION_DAYS"
+class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFragmentNameSurname.OnInputSelected {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var rootView: View
+
+    private lateinit var userNameSurnameTextView: TextView
+    private lateinit var userNameSurnameEditImageView: ImageView
+
+    private lateinit var userMeditationNumTextView: TextView
+    private lateinit var userMeditationMinutesTextView: TextView
+    private lateinit var userMeditationDaysTextView: TextView
+
+    private lateinit var switch: Switch
+    private lateinit var spinner: Spinner
+    private lateinit var locale: Locale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +61,137 @@ class ThirdFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_third, container, false)
         // Inflate the layout for this fragment
 
-        Toast.makeText(rootView.context, "third fragment", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(rootView.context, "third fragment", Toast.LENGTH_SHORT).show()
+
+        init()
 
         return rootView
+    }
+
+    private fun init() {
+
+        userNameSurnameTextView = rootView.findViewById(R.id.third_fragment_name_surname)
+        if (getUserNameSurnameSharedPreferences()=="default") {
+            userNameSurnameTextView.text = resources.getString(R.string.third_fragment_name_surname_text)
+        } else {
+            userNameSurnameTextView.text = getUserNameSurnameSharedPreferences()
+        }
+
+        userNameSurnameEditImageView = rootView.findViewById(R.id.third_fragment_edit_image_view)
+        userNameSurnameEditImageView.setOnClickListener {
+            val dialog = DialogFragmentNameSurname()
+            dialog.show(childFragmentManager, "dialog_fragment_name_surname")
+        }
+
+        userMeditationNumTextView = rootView.findViewById(R.id.user_meditation_num_text_view)
+        userMeditationNumTextView.text = getUserMeditationNumSharedPreferences()
+        userMeditationMinutesTextView = rootView.findViewById(R.id.user_meditation_minutes_text_view)
+        userMeditationMinutesTextView.text = getUserMeditationMinutesSharedPreferences()
+        userMeditationDaysTextView = rootView.findViewById(R.id.user_meditation_day_text_view)
+        userMeditationDaysTextView.text = getUserMeditationDaysSharedPreferences()
+
+        switch = rootView.findViewById(R.id.third_fragment_switch)
+
+        spinner = rootView.findViewById(R.id.third_fragment_spinner)
+        ArrayAdapter.createFromResource(
+            rootView.context,
+            R.array.Languages,
+            R.layout.spinner_item_selected
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(R.layout.my_drop_down_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+        spinner.setSelection(getLanguageSharedPreferences(), true)
+        spinner.onItemSelectedListener = this
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        saveUserLanguage(position)
+//        when(position) {
+//            0 -> setLocale("en-us")
+//            1 -> setLocale("kk")
+//        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+    }
+
+    override fun sendInputNameSurname(input: String) {
+        userNameSurnameTextView.text = input
+        saveUserNameSurname(input)
+    }
+
+    private fun setLocale(languageName: String) {
+        locale = Locale(languageName)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = locale
+        res.updateConfiguration(conf, dm)
+
+        activity?.recreate()
+    }
+
+    private fun saveUserLanguage(language: Int) {
+        val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.putInt(USER_LANGUAGE, language)
+        editor.apply()
+    }
+
+    private fun saveUserNameSurname(input: String?) {
+        val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.putString(USER_NAME_SURNAME, input)
+        editor.apply()
+    }
+
+    private fun getLanguageSharedPreferences(): Int {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getInt(USER_LANGUAGE, 0)
+    }
+
+    private fun getUserNameSurnameSharedPreferences(): String {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getString(USER_NAME_SURNAME, "default") ?:"default"
+    }
+
+    private fun getUserMeditationNumSharedPreferences(): String {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getString(USER_MEDITATION_NUM, "0") ?:"0"
+    }
+
+    private fun getUserMeditationMinutesSharedPreferences(): String {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getString(USER_MEDITATION_MINUTES, "0") ?:"0"
+    }
+
+    private fun getUserMeditationDaysSharedPreferences(): String {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getString(USER_MEDITATION_DAYS, "0") ?:"0"
     }
 
     companion object {

@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/firstFragment"
-        android:title="Обучение"
+        android:title="@string/menu_learning_text"
         android:icon="@drawable/ic_meditation"
         />
 
     <item
         android:id="@+id/secondFragment"
-        android:title="Старт"
+        android:title="@string/menu_start_text"
         android:icon="@drawable/ic_timer"
         />
 
     <item
         android:id="@+id/thirdFragment"
-        android:title="Профиль"
+        android:title="@string/menu_profile_text"
         android:icon="@drawable/ic_profile"
         />
 </menu>

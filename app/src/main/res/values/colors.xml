@@ -21,4 +21,14 @@
     <color name="center_gradient_color">#3c73f2</color>
     <color name="end_gradient_color">#1494f1</color>
 
+    <color name="statistics_icon_and_text_color">#3d3d3d</color>
+    <color name="statistics_text_color">#3b75d1</color>
+
+    <color name="bg_corner_radius_color">#6ba1eb</color>
+
+    <color name="start_gradient_button_color">#00e0a1</color>
+    <color name="center_gradient_button_color">#00ccc3</color>
+    <color name="end_gradient_button_color">#00a4f4</color>
+
+
 </resources>

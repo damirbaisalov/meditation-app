@@ -2,4 +2,29 @@
     <string name="app_name">meditation</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_learning_text">Обучение</string>
+    <string name="menu_start_text">Старт</string>
+    <string name="menu_profile_text">Профиль</string>
+
+    <string name="third_fragment_name_surname_text">Имя Фамилия</string>
+
+    <string name="third_fragment_meditation_num_text">Число \n единения</string>
+    <string name="third_fragment_meditation_minutes_text">Минуты \n единения</string>
+    <string name="third_fragment_meditation_days_text">Дни \n единения</string>
+    <string name="third_fragment_meditation_stat_initial_nums_text">0</string>
+
+    <string name="third_fragment_dark_mode_text">Темная тема</string>
+    <string name="third_fragment_language_change_text">Язык приложения</string>
+
+
+    <string name="dialog_fragment_name_surname_title_text">Укажите данные</string>
+    <string name="dialog_fragment_name_surname_name_hint_text">Имя</string>
+    <string name="dialog_fragment_surname_hint_text">Фамилия</string>
+
+    <string-array name="Languages">
+        <item>Русский</item>
+        <item>Қазақша</item>
+    </string-array>
+
 </resources>
