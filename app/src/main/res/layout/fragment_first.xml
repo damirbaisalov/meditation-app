@@ -7,9 +7,14 @@
     tools:context=".FirstFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/first_fragment_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingVertical="20dp"
+        android:clipToPadding="false"
+        tools:itemCount="8"
+        tools:listitem="@layout/meditation_video_item"
+        />
 
 </FrameLayout>
