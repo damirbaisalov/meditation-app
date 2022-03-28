@@ -1,11 +1,20 @@
 package com.example.meditation
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import com.example.meditation.viewmodel.SecondViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +33,17 @@ class SecondFragment : Fragment() {
 
     private lateinit var rootView: View
 
+    private lateinit var startButton: Button
+    private lateinit var stopButton: Button
+    private lateinit var resumeButton: Button
+    private lateinit var resetButton: Button
+
+    private lateinit var timeTextView: TextView
+    private lateinit var greetingsLinearLayout: LinearLayout
+
+
+    private lateinit var vm: SecondViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,10 +59,85 @@ class SecondFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_second, container, false)
         // Inflate the layout for this fragment
 
-        Toast.makeText(rootView.context, "second fragment", Toast.LENGTH_SHORT).show()
+        init()
+
+        vm = ViewModelProvider(requireActivity()).get(SecondViewModel::class.java)
+
+        vm.getResultTimeLive().observe(requireActivity(), {
+            timeTextView.text = it
+        })
+
+        vm.getResultStartButtonStateLive().observe(requireActivity(), {
+            startButton.isVisible = it
+        })
+
+        vm.getResultStopButtonStateLive().observe(requireActivity(), {
+            stopButton.isVisible = it
+        })
+
+        vm.getResultResumeButtonStateLive().observe(requireActivity(), {
+            resumeButton.isVisible = it
+        })
+
+        vm.getResultResetButtonStateLive().observe(requireActivity(), {
+            resetButton.isVisible = it
+        })
+
+        vm.getResultGreetingStateLive().observe(requireActivity(), {
+            greetingsLinearLayout.isVisible = it
+        })
 
         return rootView
     }
+
+    private fun init() {
+
+        timeTextView = rootView.findViewById(R.id.fragment_second_timer_text_view)
+        greetingsLinearLayout = rootView.findViewById(R.id.fragment_second_greetings_linear_layout)
+
+        startButton = rootView.findViewById(R.id.fragment_second_start_button)
+        stopButton = rootView.findViewById(R.id.fragment_second_pause_button)
+        resumeButton = rootView.findViewById(R.id.fragment_second_resume_button)
+        resetButton = rootView.findViewById(R.id.fragment_second_reset_button)
+
+        startButton.setOnClickListener {
+            startButtonClicked()
+            vm.startStopTimer()
+        }
+
+        stopButton.setOnClickListener {
+            stopButtonClicked()
+            vm.startStopTimer()
+        }
+
+        resumeButton.setOnClickListener {
+            resumeButtonClicked()
+            vm.startStopTimer()
+        }
+
+        resetButton.setOnClickListener {
+            resetButtonClicked()
+            vm.resetTimer()
+        }
+
+    }
+
+    private fun startButtonClicked() {
+        vm.resetResultStartButtonStateLive()
+    }
+
+    private fun stopButtonClicked() {
+        vm.resetResultStopButtonStateLive()
+    }
+
+    private fun resumeButtonClicked() {
+        vm.resetResultResumeButtonStateLive()
+    }
+
+    private fun resetButtonClicked() {
+        vm.resetResultResetButtonStateLive()
+    }
+
 
     companion object {
         /**

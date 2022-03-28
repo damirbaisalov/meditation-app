@@ -17,10 +17,16 @@
     <string name="third_fragment_dark_mode_text">Темная тема</string>
     <string name="third_fragment_language_change_text">Язык приложения</string>
 
-
     <string name="dialog_fragment_name_surname_title_text">Укажите данные</string>
     <string name="dialog_fragment_name_surname_name_hint_text">Имя</string>
     <string name="dialog_fragment_surname_hint_text">Фамилия</string>
+
+    <string name="second_fragment_start_button_text">начать</string>
+    <string name="second_fragment_pause_button_text">пауза</string>
+    <string name="second_fragment_resume_button_text">Продолжить</string>
+    <string name="second_fragment_reset_button_text">Сбросить</string>
+    <string name="second_fragment_initial_timer_text">05:00</string>
+    <string name="second_fragment_greeting_text">Вы завершили свой сеанс!</string>
 
     <string-array name="Languages">
         <item>Русский</item>
