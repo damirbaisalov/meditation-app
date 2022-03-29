@@ -28,6 +28,7 @@
     <string name="second_fragment_resume_button_text">Жалғастыру</string>
     <string name="second_fragment_reset_button_text">Қалпына келтіру</string>
     <string name="second_fragment_initial_timer_text">05:00</string>
+    <string name="second_fragment_initial_timer_brief_text">00:03</string>
     <string name="second_fragment_greeting_text">Сеансты аяқтадыңыз!</string>
 
     <string-array name="Languages">

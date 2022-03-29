@@ -1,16 +1,21 @@
 package com.example.meditation
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.meditation.main_window.MY_APP_USER_ACTIVITY
+import com.example.meditation.main_window.USER_DARK_MODE
 import com.example.meditation.models.Database
 import com.example.meditation.models.MeditationVideoData
 import com.example.meditation.view.MeditationVideoAdapter
@@ -32,6 +37,8 @@ class FirstFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var rootView: View
+
+    private lateinit var firstFragmentParentLayout: FrameLayout
 
     private lateinit var recyclerView: RecyclerView
     private val meditationVideoAdapter = MeditationVideoAdapter(getMeditationVideoClickListener())
@@ -57,6 +64,12 @@ class FirstFragment : Fragment() {
     }
 
     private fun init() {
+
+        firstFragmentParentLayout = rootView.findViewById(R.id.first_fragment_parent_layout)
+        if (getUserDarkModeSharedPreferences())
+            firstFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+        else
+            firstFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
 
         recyclerView = rootView.findViewById(R.id.first_fragment_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(
@@ -86,6 +99,15 @@ class FirstFragment : Fragment() {
             startActivity(webIntent)
         }
 
+    }
+
+    private fun getUserDarkModeSharedPreferences(): Boolean {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getBoolean(USER_DARK_MODE, false)
     }
 
     companion object {

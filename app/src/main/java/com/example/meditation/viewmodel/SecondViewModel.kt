@@ -10,12 +10,14 @@ import com.example.meditation.main_window.MY_APP_USER_ACTIVITY
 import com.example.meditation.main_window.USER_MEDITATION_DAYS
 import com.example.meditation.main_window.USER_MEDITATION_MINUTES
 import com.example.meditation.main_window.USER_MEDITATION_NUM
+import com.example.meditation.services.TimeBriefService
 import com.example.meditation.services.TimerService
 import kotlin.math.roundToInt
 
 class SecondViewModel(application: Application): AndroidViewModel(application) {
 
     private val resultTimeLive = MutableLiveData<String>()
+    private val resultTimeBriefLive = MutableLiveData<String>()
 
     private val resultStartButtonStateLive = MutableLiveData<Boolean>()
     private val resultStopButtonStateLive = MutableLiveData<Boolean>()
@@ -25,8 +27,10 @@ class SecondViewModel(application: Application): AndroidViewModel(application) {
     private val resultGreetingStateLive = MutableLiveData<Boolean>()
 
     private var serviceIntent: Intent
+    private var serviceBriefIntent: Intent
     private var timeStarted = false
     private var time = 300.0
+    private var timeBrief = 3.0
 
     init {
 
@@ -54,16 +58,30 @@ class SecondViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 if (time==0.0) {
-                    resultGreetingStateLive.value = true
-                    time = 300.0
                     stopTimer()
                     resetResultResetButtonStateLive()
+                    resultGreetingStateLive.value = true
+                    time = 300.0
+                    timeBrief = 3.0
                 }
+            }
+        }
+
+        val updateBriefTime: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+
+                    timeBrief = intent.getDoubleExtra(TimeBriefService.TIME_BRIEF_EXTRA, 3.0)
+
+                    resultTimeBriefLive.value = getTimeStringFromDouble(timeBrief)
             }
         }
 
         serviceIntent = Intent(application, TimerService::class.java)
         application.registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
+
+
+        serviceBriefIntent = Intent(application, TimeBriefService::class.java)
+        application.registerReceiver(updateBriefTime, IntentFilter(TimeBriefService.TIMER_BRIEF_UPDATED))
 
     }
 
@@ -77,6 +95,11 @@ class SecondViewModel(application: Application): AndroidViewModel(application) {
     //TIME-LIVE
     fun getResultTimeLive(): LiveData<String> {
         return resultTimeLive
+    }
+
+    //BRIEF-TIME
+    fun getResultTimeBriefLive(): LiveData<String> {
+        return resultTimeBriefLive
     }
 
     //GREETING
@@ -133,7 +156,9 @@ class SecondViewModel(application: Application): AndroidViewModel(application) {
     fun resetTimer() {
         stopTimer()
         time = 300.0
+        timeBrief = 3.0
         resultTimeLive.value = getTimeStringFromDouble(time)
+        resultTimeBriefLive.value = getTimeStringFromDouble(timeBrief)
     }
 
     fun startStopTimer() {
@@ -145,12 +170,15 @@ class SecondViewModel(application: Application): AndroidViewModel(application) {
 
     private fun startTimer() {
         serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
+        serviceBriefIntent.putExtra(TimeBriefService.TIME_BRIEF_EXTRA, timeBrief)
         getApplication<Application>().startService(serviceIntent)
+        getApplication<Application>().startService(serviceBriefIntent)
         timeStarted = true
     }
 
     private fun stopTimer() {
         getApplication<Application>().stopService(serviceIntent)
+        getApplication<Application>().stopService(serviceBriefIntent)
         timeStarted = false
     }
 

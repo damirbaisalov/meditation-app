@@ -2,11 +2,11 @@ package com.example.meditation
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import com.example.meditation.dialog_fragments.DialogFragmentNameSurname
 import com.example.meditation.main_window.*
@@ -29,6 +29,8 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
     private var param2: String? = null
 
     private lateinit var rootView: View
+
+    private lateinit var thirdFragmentParentLayout: FrameLayout
 
     private lateinit var userNameSurnameTextView: TextView
     private lateinit var userNameSurnameEditImageView: ImageView
@@ -65,6 +67,14 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
     private fun init() {
 
+        thirdFragmentParentLayout = rootView.findViewById(R.id.third_fragment_parent_layout)
+        if (getUserDarkModeSharedPreferences()) {
+            thirdFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+        }
+        else {
+            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
+        }
+
         userNameSurnameTextView = rootView.findViewById(R.id.third_fragment_name_surname)
         if (getUserNameSurnameSharedPreferences()=="default") {
             userNameSurnameTextView.text = resources.getString(R.string.third_fragment_name_surname_text)
@@ -86,6 +96,11 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
         userMeditationDaysTextView.text = getUserMeditationDaysSharedPreferences()
 
         switch = rootView.findViewById(R.id.third_fragment_switch)
+        switch.isChecked = getUserDarkModeSharedPreferences()
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            saveUserDarkMode(isChecked)
+            activity?.recreate()
+        }
 
         spinner = rootView.findViewById(R.id.third_fragment_spinner)
         ArrayAdapter.createFromResource(
@@ -129,6 +144,24 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
         activity?.recreate()
     }
+
+
+    private fun saveUserDarkMode(input: Boolean) {
+        val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.putBoolean(USER_DARK_MODE, input)
+        editor.apply()
+    }
+
+    private fun getUserDarkModeSharedPreferences(): Boolean {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getBoolean(USER_DARK_MODE, false)
+    }
+
 
     private fun saveUserLanguage(language: Int) {
         val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
@@ -188,6 +221,7 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
         return sharedPreferences.getString(USER_MEDITATION_DAYS, "0") ?:"0"
     }
+    
 
     companion object {
         /**

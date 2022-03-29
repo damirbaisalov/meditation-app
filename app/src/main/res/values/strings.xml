@@ -27,6 +27,7 @@
     <string name="second_fragment_resume_button_text">Продолжить</string>
     <string name="second_fragment_reset_button_text">Сбросить</string>
     <string name="second_fragment_initial_timer_text">05:00</string>
+    <string name="second_fragment_initial_timer_brief_text">00:03</string>
     <string name="second_fragment_greeting_text">Вы завершили свой сеанс!</string>
 
     <string-array name="Languages">

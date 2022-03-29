@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/second_fragment_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,36 +22,73 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cardCornerRadius="20dp"
-                android:elevation="4dp"
-                >
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/fragment_second_timer_text_view"
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/second_fragment_initial_timer_text"
-                    android:textColor="@color/white"
-                    android:textSize="70sp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:background="@color/center_gradient_color"
-                    />
+                    app:cardCornerRadius="20dp"
+                    android:elevation="4dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/fragment_second_timer_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/second_fragment_initial_timer_text"
+                        android:textColor="@color/white"
+                        android:textSize="70sp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:background="@color/center_gradient_color"
+                        />
 
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    android:elevation="4dp"
+                    android:layout_marginTop="5dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/fragment_second_timer_brief_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/second_fragment_initial_timer_brief_text"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:background="@color/center_gradient_color"
+                        />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/fragment_second_greetings_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:visibility="gone"
+                android:visibility="invisible"
                 android:gravity="center"
                 android:layout_marginHorizontal="40dp"
                 android:orientation="horizontal">
@@ -68,6 +106,7 @@
                     android:text="@string/second_fragment_greeting_text"
                     android:textColor="@color/white"
                     android:textSize="14sp"
+                    android:textAlignment="center"
                     android:layout_marginHorizontal="10dp"
                     />
 

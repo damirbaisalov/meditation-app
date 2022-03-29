@@ -30,5 +30,6 @@
     <color name="center_gradient_button_color">#00ccc3</color>
     <color name="end_gradient_button_color">#00a4f4</color>
 
+    <color name="bottom_nav_view_dark">#FF424242</color>
 
 </resources>

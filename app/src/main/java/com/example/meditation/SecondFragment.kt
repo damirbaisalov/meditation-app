@@ -8,12 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.example.meditation.main_window.MY_APP_USER_ACTIVITY
+import com.example.meditation.main_window.USER_DARK_MODE
 import com.example.meditation.viewmodel.SecondViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,14 +32,16 @@ class SecondFragment : Fragment() {
 
     private lateinit var rootView: View
 
+    private lateinit var secondFragmentParentLayout: FrameLayout
+
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
     private lateinit var resumeButton: Button
     private lateinit var resetButton: Button
 
     private lateinit var timeTextView: TextView
+    private lateinit var timeBriefTextView: TextView
     private lateinit var greetingsLinearLayout: LinearLayout
-
 
     private lateinit var vm: SecondViewModel
 
@@ -65,6 +66,10 @@ class SecondFragment : Fragment() {
 
         vm.getResultTimeLive().observe(requireActivity(), {
             timeTextView.text = it
+        })
+
+        vm.getResultTimeBriefLive().observe(requireActivity(), {
+            timeBriefTextView.text = it
         })
 
         vm.getResultStartButtonStateLive().observe(requireActivity(), {
@@ -92,7 +97,14 @@ class SecondFragment : Fragment() {
 
     private fun init() {
 
+        secondFragmentParentLayout = rootView.findViewById(R.id.second_fragment_parent_layout)
+        if (getUserDarkModeSharedPreferences())
+            secondFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+        else
+            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
+
         timeTextView = rootView.findViewById(R.id.fragment_second_timer_text_view)
+        timeBriefTextView = rootView.findViewById(R.id.fragment_second_timer_brief_text_view)
         greetingsLinearLayout = rootView.findViewById(R.id.fragment_second_greetings_linear_layout)
 
         startButton = rootView.findViewById(R.id.fragment_second_start_button)
@@ -136,6 +148,15 @@ class SecondFragment : Fragment() {
 
     private fun resetButtonClicked() {
         vm.resetResultResetButtonStateLive()
+    }
+
+    private fun getUserDarkModeSharedPreferences(): Boolean {
+        val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
+            MY_APP_USER_ACTIVITY,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.getBoolean(USER_DARK_MODE, false)
     }
 
 
