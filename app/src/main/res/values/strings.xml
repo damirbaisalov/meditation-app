@@ -9,7 +9,7 @@
 
     <string name="third_fragment_name_surname_text">Имя Фамилия</string>
 
-    <string name="third_fragment_meditation_num_text">Число \n единения</string>
+    <string name="third_fragment_meditation_num_text">Число \n сеансов</string>
     <string name="third_fragment_meditation_minutes_text">Минуты \n единения</string>
     <string name="third_fragment_meditation_days_text">Дни \n единения</string>
     <string name="third_fragment_meditation_stat_initial_nums_text">0</string>
@@ -20,6 +20,7 @@
     <string name="dialog_fragment_name_surname_title_text">Укажите данные</string>
     <string name="dialog_fragment_name_surname_name_hint_text">Имя</string>
     <string name="dialog_fragment_surname_hint_text">Фамилия</string>
+    <string name="dialog_fragment_name_surname_save_button_text">Сохранить</string>
 
     <string name="second_fragment_start_button_text">начать</string>
     <string name="second_fragment_pause_button_text">пауза</string>

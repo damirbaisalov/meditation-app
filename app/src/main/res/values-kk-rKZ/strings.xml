@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">meditation</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_learning_text">Оқыту</string>
+    <string name="menu_start_text">Бастау</string>
+    <string name="menu_profile_text">Профиль</string>
+
+    <string name="third_fragment_name_surname_text">Аты Тегі</string>
+
+    <string name="third_fragment_meditation_num_text">Сеанс \n саны</string>
+    <string name="third_fragment_meditation_minutes_text">Медитация \n уақыты</string>
+    <string name="third_fragment_meditation_days_text">Медитация \n күндері</string>
+    <string name="third_fragment_meditation_stat_initial_nums_text">0</string>
+
+    <string name="third_fragment_dark_mode_text">Қараңғы режим</string>
+    <string name="third_fragment_language_change_text">Қолданба тілі</string>
+
+    <string name="dialog_fragment_name_surname_title_text">Деректерді енгізіңіз</string>
+    <string name="dialog_fragment_name_surname_name_hint_text">Аты</string>
+    <string name="dialog_fragment_surname_hint_text">Тегі</string>
+    <string name="dialog_fragment_name_surname_save_button_text">Сақтау</string>
+
+    <string name="second_fragment_start_button_text">Бастау</string>
+    <string name="second_fragment_pause_button_text">Пауза</string>
+    <string name="second_fragment_resume_button_text">Жалғастыру</string>
+    <string name="second_fragment_reset_button_text">Қалпына келтіру</string>
+    <string name="second_fragment_initial_timer_text">05:00</string>
+    <string name="second_fragment_greeting_text">Сеансты аяқтадыңыз!</string>
+
+    <string-array name="Languages">
+        <item>Русский</item>
+        <item>Қазақша</item>
+    </string-array>
+
+</resources>

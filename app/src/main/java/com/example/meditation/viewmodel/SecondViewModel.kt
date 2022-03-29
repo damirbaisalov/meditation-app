@@ -6,7 +6,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.meditation.*
+import com.example.meditation.main_window.MY_APP_USER_ACTIVITY
+import com.example.meditation.main_window.USER_MEDITATION_DAYS
+import com.example.meditation.main_window.USER_MEDITATION_MINUTES
+import com.example.meditation.main_window.USER_MEDITATION_NUM
 import com.example.meditation.services.TimerService
 import kotlin.math.roundToInt
 

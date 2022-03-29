@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.meditation.dialog_fragments.DialogFragmentNameSurname
+import com.example.meditation.main_window.*
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,12 +23,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-const val MY_APP_USER_ACTIVITY = "MY_APP_USER_ACTIVITY"
-const val USER_LANGUAGE = "USER_LANGUAGE"
-const val USER_NAME_SURNAME = "USER_NAME_SURNAME"
-const val USER_MEDITATION_NUM = "USER_MEDITATION_NUM"
-const val USER_MEDITATION_MINUTES = "USER_MEDITATION_MINUTES"
-const val USER_MEDITATION_DAYS = "USER_MEDITATION_DAYS"
 class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFragmentNameSurname.OnInputSelected {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -109,10 +104,10 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         saveUserLanguage(position)
-//        when(position) {
-//            0 -> setLocale("en-us")
-//            1 -> setLocale("kk")
-//        }
+        when(position) {
+            0 -> setLocale("en-us")
+            1 -> setLocale("kk")
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
