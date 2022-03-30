@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.example.meditation.R
 import com.example.meditation.data.repository.UserRepositoryImpl
+import com.example.meditation.data.storage.sharedprefs.SharedPrefUserStorage
 import com.example.meditation.domain.models.SaveUserNameParam
 import com.example.meditation.domain.models.UserName
 import com.example.meditation.domain.repository.UserRepository
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sendButton: Button
     private lateinit var receiveButton: Button
 
-    private val userRepository by lazy(LazyThreadSafetyMode.NONE) { UserRepositoryImpl(context = applicationContext) }
+    private val sharedPrefUserStorage by lazy(LazyThreadSafetyMode.NONE) { SharedPrefUserStorage(context = applicationContext)}
+    private val userRepository by lazy(LazyThreadSafetyMode.NONE) { UserRepositoryImpl(sharedPrefUserStorage = sharedPrefUserStorage) }
     private val getUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) { GetUserNameUseCase(userRepository = userRepository) }
     private val saveUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) { SaveUserNameUseCase(userRepository = userRepository) }
 
