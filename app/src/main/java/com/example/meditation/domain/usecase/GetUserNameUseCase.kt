@@ -1,10 +1,11 @@
 package com.example.meditation.domain.usecase
 
 import com.example.meditation.domain.models.UserName
+import com.example.meditation.domain.repository.UserRepository
 
-class GetUserNameUseCase {
+class GetUserNameUseCase(private val userRepository: UserRepository) {
 
     fun execute(): UserName {
-        return UserName(firstName = "Robert", lastName = "Miller")
+        return userRepository.getName()
     }
 }
