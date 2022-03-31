@@ -69,7 +69,7 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
         thirdFragmentParentLayout = rootView.findViewById(R.id.third_fragment_parent_layout)
         if (getUserDarkModeSharedPreferences()) {
-            thirdFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
         }
         else {
             thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)

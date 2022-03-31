@@ -67,7 +67,7 @@ class FirstFragment : Fragment() {
 
         firstFragmentParentLayout = rootView.findViewById(R.id.first_fragment_parent_layout)
         if (getUserDarkModeSharedPreferences())
-            firstFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+            firstFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
         else
             firstFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
 

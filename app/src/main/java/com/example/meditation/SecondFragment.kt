@@ -99,7 +99,7 @@ class SecondFragment : Fragment() {
 
         secondFragmentParentLayout = rootView.findViewById(R.id.second_fragment_parent_layout)
         if (getUserDarkModeSharedPreferences())
-            secondFragmentParentLayout.setBackgroundResource(android.R.color.background_dark)
+            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
         else
             secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
 
