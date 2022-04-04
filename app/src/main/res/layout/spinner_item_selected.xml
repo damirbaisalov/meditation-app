@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:textSize="14sp"
     android:textColor="@color/white"
-    android:background="@color/bg_corner_radius_color"
     android:gravity="end"
     >
 </TextView>

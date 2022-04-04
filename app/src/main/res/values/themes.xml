@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Meditation" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Meditation" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/first_app_color</item>
         <item name="colorPrimaryVariant">@color/start_gradient_color</item>
@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="android:windowBackground">@drawable/splash_screen_bg</item>
         <item name="android:statusBarColor">@color/start_gradient_color</item>

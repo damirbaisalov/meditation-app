@@ -1,36 +1,36 @@
 package com.example.meditation
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import com.example.meditation.dialog_fragments.DialogFragmentNameSurname
 import com.example.meditation.main_window.*
+import kotlinx.android.synthetic.main.activity_main_window.*
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ThirdFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFragmentNameSurname.OnInputSelected {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var rootView: View
 
     private lateinit var thirdFragmentParentLayout: FrameLayout
+    private lateinit var thirdFragmentStatisticsLayout: LinearLayout
+    private lateinit var thirdFragmentBottomLayout: LinearLayout
+    private lateinit var thirdFragmentNumTitleTextView: TextView
+    private lateinit var thirdFragmentMinTitleTextView: TextView
+    private lateinit var thirdFragmentDayTitleTextView: TextView
+    private lateinit var thirdFragmentDarkModeTextView: TextView
+    private lateinit var thirdFragmentLanguageTextView: TextView
+
+
 
     private lateinit var userNameSurnameTextView: TextView
     private lateinit var userNameSurnameEditImageView: ImageView
@@ -42,14 +42,6 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
     private lateinit var switch: Switch
     private lateinit var spinner: Spinner
     private lateinit var locale: Locale
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,12 +60,13 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
     private fun init() {
 
         thirdFragmentParentLayout = rootView.findViewById(R.id.third_fragment_parent_layout)
-        if (getUserDarkModeSharedPreferences()) {
-            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
-        }
-        else {
-            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
-        }
+        thirdFragmentStatisticsLayout = rootView.findViewById(R.id.fragment_third_statistics_layout)
+        thirdFragmentBottomLayout = rootView.findViewById(R.id.fragment_third_bottom_layout)
+        thirdFragmentNumTitleTextView = rootView.findViewById(R.id.fragment_third_num_title_text)
+        thirdFragmentMinTitleTextView = rootView.findViewById(R.id.fragment_third_minutes_title_text)
+        thirdFragmentDayTitleTextView = rootView.findViewById(R.id.fragment_third_day_title_text)
+        thirdFragmentDarkModeTextView = rootView.findViewById(R.id.fragment_third_dark_theme_title)
+        thirdFragmentLanguageTextView = rootView.findViewById(R.id.fragment_third_language_title)
 
         userNameSurnameTextView = rootView.findViewById(R.id.third_fragment_name_surname)
         if (getUserNameSurnameSharedPreferences()=="default") {
@@ -95,11 +88,13 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
         userMeditationDaysTextView = rootView.findViewById(R.id.user_meditation_day_text_view)
         userMeditationDaysTextView.text = getUserMeditationDaysSharedPreferences()
 
+        handleDarkModeViews(getUserDarkModeSharedPreferences())
+
         switch = rootView.findViewById(R.id.third_fragment_switch)
         switch.isChecked = getUserDarkModeSharedPreferences()
         switch.setOnCheckedChangeListener { _, isChecked ->
             saveUserDarkMode(isChecked)
-            activity?.recreate()
+            handleDarkModeViews(isChecked)
         }
 
         spinner = rootView.findViewById(R.id.third_fragment_spinner)
@@ -142,9 +137,52 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
         conf.locale = locale
         res.updateConfiguration(conf, dm)
 
-        activity?.recreate()
+        if (getUserNameSurnameSharedPreferences()=="default")
+            userNameSurnameTextView.text = res.getString(R.string.third_fragment_name_surname_text)
+
+        thirdFragmentNumTitleTextView.text= res.getString(R.string.third_fragment_meditation_num_text)
+        thirdFragmentMinTitleTextView.text= res.getString(R.string.third_fragment_meditation_minutes_text)
+        thirdFragmentDayTitleTextView.text= res.getString(R.string.third_fragment_meditation_days_text)
+        thirdFragmentDarkModeTextView.text= res.getString(R.string.third_fragment_dark_mode_text)
+        thirdFragmentLanguageTextView.text= res.getString(R.string.third_fragment_language_change_text)
+        requireActivity().bottomNavigationView.menu.getItem(0).title = res.getString(R.string.menu_learning_text)
+        requireActivity().bottomNavigationView.menu.getItem(1).title = res.getString(R.string.menu_start_text)
+        requireActivity().bottomNavigationView.menu.getItem(2).title = res.getString(R.string.menu_profile_text)
+
+//        startActivity(requireActivity().intent)
+//        requireActivity().finish()
+//        requireActivity().overridePendingTransition(0, 0)
     }
 
+    private fun handleDarkModeViews(isChecked: Boolean) {
+        if (isChecked) {
+            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
+            changeStatusBarMode(android.R.color.background_dark)
+            requireActivity().bottomNavigationView.setBackgroundResource(R.color.bottom_nav_view_dark)
+            thirdFragmentStatisticsLayout.setBackgroundResource(R.drawable.bg_dark_corner_radius)
+            thirdFragmentBottomLayout.setBackgroundResource(R.drawable.bg_dark_corner_radius)
+            thirdFragmentNumTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+            thirdFragmentMinTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+            thirdFragmentDayTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+        }
+        else {
+            thirdFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
+            changeStatusBarMode(R.color.start_gradient_color)
+            requireActivity().bottomNavigationView.setBackgroundResource(R.color.bottom_nav_color)
+            thirdFragmentStatisticsLayout.setBackgroundResource(R.drawable.bg_white_corner_radius)
+            thirdFragmentBottomLayout.setBackgroundResource(R.drawable.bg_gradient_corner_radius)
+            thirdFragmentNumTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
+            thirdFragmentMinTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
+            thirdFragmentDayTitleTextView.setTextColor(ContextCompat.getColor(requireActivity(), R.color.black))
+        }
+    }
+
+    private fun changeStatusBarMode(id: Int) {
+        val window: Window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = ContextCompat.getColor(requireContext(), id)
+    }
 
     private fun saveUserDarkMode(input: Boolean) {
         val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
@@ -161,7 +199,6 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
 
         return sharedPreferences.getBoolean(USER_DARK_MODE, false)
     }
-
 
     private fun saveUserLanguage(language: Int) {
         val sharedPref = rootView.context.getSharedPreferences(MY_APP_USER_ACTIVITY, Context.MODE_PRIVATE)
@@ -220,26 +257,5 @@ class ThirdFragment : Fragment(), AdapterView.OnItemSelectedListener, DialogFrag
         )
 
         return sharedPreferences.getString(USER_MEDITATION_DAYS, "0") ?:"0"
-    }
-    
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ThirdFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ThirdFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

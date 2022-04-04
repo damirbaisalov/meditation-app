@@ -1,6 +1,5 @@
 package com.example.meditation
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,20 +14,7 @@ import com.example.meditation.main_window.MY_APP_USER_ACTIVITY
 import com.example.meditation.main_window.USER_DARK_MODE
 import com.example.meditation.viewmodel.SecondViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SecondFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SecondFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var rootView: View
 
@@ -44,14 +30,6 @@ class SecondFragment : Fragment() {
     private lateinit var greetingsLinearLayout: LinearLayout
 
     private lateinit var vm: SecondViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,10 +76,6 @@ class SecondFragment : Fragment() {
     private fun init() {
 
         secondFragmentParentLayout = rootView.findViewById(R.id.second_fragment_parent_layout)
-        if (getUserDarkModeSharedPreferences())
-            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
-        else
-            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
 
         timeTextView = rootView.findViewById(R.id.fragment_second_timer_text_view)
         timeBriefTextView = rootView.findViewById(R.id.fragment_second_timer_brief_text_view)
@@ -111,6 +85,8 @@ class SecondFragment : Fragment() {
         stopButton = rootView.findViewById(R.id.fragment_second_pause_button)
         resumeButton = rootView.findViewById(R.id.fragment_second_resume_button)
         resetButton = rootView.findViewById(R.id.fragment_second_reset_button)
+
+        handleDarkModeViews(getUserDarkModeSharedPreferences())
 
         startButton.setOnClickListener {
             startButtonClicked()
@@ -150,6 +126,27 @@ class SecondFragment : Fragment() {
         vm.resetResultResetButtonStateLive()
     }
 
+    private fun handleDarkModeViews(isDark: Boolean) {
+        if (isDark) {
+            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_dark)
+            timeTextView.setBackgroundResource(R.color.bottom_nav_view_dark)
+            timeBriefTextView.setBackgroundResource(R.color.bottom_nav_view_dark)
+            startButton.setBackgroundResource(R.drawable.circle_dark_button_ripple)
+            resumeButton.setBackgroundResource(R.drawable.circle_dark_button_ripple)
+            resetButton.setBackgroundResource(R.drawable.circle_dark_button_ripple)
+
+
+        }
+        else {
+            secondFragmentParentLayout.setBackgroundResource(R.drawable.bg_gradient)
+            timeTextView.setBackgroundResource(R.color.center_gradient_color)
+            timeBriefTextView.setBackgroundResource(R.color.center_gradient_color)
+            startButton.setBackgroundResource(R.drawable.circle_button_ripple)
+            resumeButton.setBackgroundResource(R.drawable.circle_button_ripple)
+            resetButton.setBackgroundResource(R.drawable.circle_button_ripple)
+        }
+    }
+
     private fun getUserDarkModeSharedPreferences(): Boolean {
         val sharedPreferences: SharedPreferences = rootView.context.getSharedPreferences(
             MY_APP_USER_ACTIVITY,
@@ -157,26 +154,5 @@ class SecondFragment : Fragment() {
         )
 
         return sharedPreferences.getBoolean(USER_DARK_MODE, false)
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SecondFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

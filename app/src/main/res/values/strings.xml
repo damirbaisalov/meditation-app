@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">meditation</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Meditation</string>
 
     <string name="menu_learning_text">Обучение</string>
     <string name="menu_start_text">Старт</string>

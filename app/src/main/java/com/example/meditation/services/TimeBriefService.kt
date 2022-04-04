@@ -26,7 +26,7 @@ class TimeBriefService: Service() {
     private inner class TimeTask(private var time: Double): TimerTask() {
         override fun run() {
 
-            if (time<0.0) {
+            if (time<=0.0) {
                 time = 4.0
             }
 

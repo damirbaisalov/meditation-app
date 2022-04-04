@@ -57,6 +57,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fragment_third_statistics_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -82,6 +83,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/fragment_third_num_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/third_fragment_meditation_num_text"
@@ -117,6 +119,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/fragment_third_minutes_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/third_fragment_meditation_minutes_text"
@@ -151,6 +154,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/fragment_third_day_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/third_fragment_meditation_days_text"
@@ -179,6 +183,7 @@
             android:layout_weight="2">
 
             <LinearLayout
+                android:id="@+id/fragment_third_bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_gradient_corner_radius"
@@ -202,6 +207,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/fragment_third_dark_theme_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="@string/third_fragment_dark_mode_text"
@@ -240,6 +246,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/fragment_third_language_title"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="@string/third_fragment_language_change_text"
