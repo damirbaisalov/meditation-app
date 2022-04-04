@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sendButton: Button
     private lateinit var receiveButton: Button
 
-    private val sharedPrefUserStorage by lazy(LazyThreadSafetyMode.NONE) { SharedPrefUserStorage(context = applicationContext)}
-    private val userRepository by lazy(LazyThreadSafetyMode.NONE) { UserRepositoryImpl(sharedPrefUserStorage = sharedPrefUserStorage) }
+//    private val sharedPrefUserStorage by lazy(LazyThreadSafetyMode.NONE) { SharedPrefUserStorage(context = applicationContext)}
+    private val userRepository by lazy(LazyThreadSafetyMode.NONE) { UserRepositoryImpl(sharedPrefUserStorage = SharedPrefUserStorage(context = applicationContext)) }
     private val getUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) { GetUserNameUseCase(userRepository = userRepository) }
     private val saveUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) { SaveUserNameUseCase(userRepository = userRepository) }
 
